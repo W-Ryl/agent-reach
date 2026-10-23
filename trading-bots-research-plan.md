@@ -295,3 +295,65 @@ Be blunt. If the honest answer is "this mostly doesn't work for retail," say so,
 - [Jev-Trades](https://github.com/zadescoxp/Jev-Trades): code handles sizing, take-profit and stop-loss; paper trading by default with optional Bybit testnet.
 
 **Why it matters for our plan:** this is the right architecture. The LLM pitches and argues, deterministic code sizes and executes, a risk agent can veto, and auditors review afterward. It matches section 4's guardrails. Add "identify this repo and compare it with TradingAgents / ai-fund" to the research prompt's tool list (section 5.3).
+
+---
+
+## 8. Added Oct 23: four more reels
+
+### 8.1 The prop-firm math paper (@davidtrades_model, DezXMPwoZL0)
+**The paper:** [*Prop-Firm Challenges: A Barrier Model of Pass Rates and Expected Value*](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7445798) by Rubén Villahermosa, on SSRN.
+
+**What it shows:**
+- A challenge is a race between two lines: the **profit target T** above and the **loss limit L** below.
+- With **no edge**, your chance of passing is **L ÷ (T + L)**, *whatever the volatility*.
+- On a standard challenge that's **44.4%**.
+- Measured on real index-futures sessions (6 years of 1-minute data; the caption says 1,713 sessions), it falls to **40.4%** with the daily loss bracket and **34.7%** with a trailing drawdown.
+- It then prices the whole life of a funded account. The paper's expected value per evaluation is about **+0.052 L at the fee actually paid and -0.018 L at list price**. In other words, without an edge the product only breaks even at discount prices.
+
+**Why it matters:** this is the exact maths our Phase 3 needs.
+- **Pick firms where L is large relative to T.**
+- **Avoid trailing drawdowns** where possible.
+- **Only buy evaluations at a discount.**
+- **Size trades so that your edge, not luck, carries you.**
+
+Add this paper to the deep-research prompt (section 5, question 5) and have Claude build the Monte Carlo on top of the formula. The creator's "comment PROFIT" prompts weren't accessed.
+
+### 8.2 and 8.3 "3PO" AI quant, the same creator as #10 (@astongilltrading, DcYpBhBod3b + DcOV72Eo_NO)
+
+**Claims:**
+- A **25-day win streak** and **5 payouts**, "100% winning days in the last 5 weeks," fully automated.
+- Shown on a **Lucid Trading "LucidFlex 50K"** futures prop account: balance about $52,574 against a $50,100 minimum, +$1,418 this payout period, 25 trading days.
+- He requests a payout of about $1,300 live on camera, in crypto.
+
+**How it works:**
+1. 3PO scans the internet for quant papers and books (1,100+ research items).
+2. It turns them into **about 72,000 strategies**.
+3. Each strategy runs a gauntlet: in-sample screening → sweep neighbourhood → cost sensitivity → out-of-sample → walk-forward → Monte Carlo → deflated Sharpe → plateau → regime tests.
+4. It picks the winners per **market regime**.
+5. It executes through **NinjaTrader 8 (futures), MetaTrader 5/4 (forex), MultiCharts and Interactive Brokers (stocks), and CCXT (crypto)**.
+
+**Stated results:**
+- Combined: 57% win rate, +120R, profit factor 2.54, average win 1.37R vs average loss about 0.7R.
+- Per market: futures +$6.5k with a $483 drawdown, forex +$3k, stocks +$5k, crypto +$3.5k.
+- Phone alerts.
+
+**Caveats:**
+- It's a sales funnel ("comment ACCESS").
+- One account's streak is a small sample, and these payouts are around $1.3k.
+- The pipeline itself is textbook-correct and the closest public example of what our plan describes.
+- Lucid Trading permitting this level of automation is worth adding to the prop-firm research list.
+
+**Dashboard screenshots are saved in** [`trading-dashboard-inspo/`](trading-dashboard-inspo/), with design notes.
+
+### 8.4 GPT-6 Astra trading NQ on a simulator (@faiz.smc, Dd9y_pys7WQ)
+**What happens:** the creator lets **OpenAI's GPT-6 Astra** (released Sep 2026, strong at *computer use*) trade **1 NQ contract on SIM** by operating the chart software:
+- **Deepcharts** footprint/order-flow charts, CVD, big-trades tools.
+- **Gamma exposure (GEX)** levels; the transcript says "mentored cube," probably MenthorQ.
+
+**On screen:** the chat log shows 11 trades (full target +$800, stop -$400, three +$600 wins, a breakeven stop and so on), totalling **+$1,935 on SIM**. It wrote: "I inspected the enlarged footprint before entry and exited early when selling stalled and CVD recovered." The creator says "don't try this at home." Next he'll try to pass an evaluation in one day.
+
+**What it means for us:**
+- This is the "AI looks at the screen and clicks" approach. It's slow and costly per decision, and only one SIM day is shown.
+- It's interesting as a research or discretionary assistant, not a robust bot.
+- Its opposite is the 11-agent reel (§7): code, not AI, places orders.
+- It shows **GEX** and **footprint/CVD** as data sources worth evaluating.
