@@ -269,3 +269,29 @@ Be blunt. If the honest answer is "this mostly doesn't work for retail," say so,
   - [Fincept Terminal](https://github.com/Fincept-Corporation/FinceptTerminal)
   - [Vibe-Trading](https://github.com/HKUDS/Vibe-Trading)
   - [Microsoft SkillOpt](https://github.com/microsoft/SkillOpt)
+
+---
+
+## 7. Added Oct 23: "Free AI hedge fund, 11 agents" (@msbintel, DewXNu0jrzS)
+**Claim:** a free GitHub project runs a crypto desk like a hedge fund, with 11 agents in 5 jobs. "11 AI agents. None can click BUY."
+
+**The desk (on-screen diagram):**
+1. **Screener** (×1) picks the coins worth a look from BTC, ETH, SOL, XRP, ADA, DOGE, AVAX, LINK, DOT, LTC, ATOM and NEAR. The example picks 3.
+2. **Analysts** (×4) each build a case:
+   - charts
+   - the economy
+   - on-chain/blockchain data
+   - the mood online (the Crypto **Fear & Greed Index** from alternative.me is shown)
+3. **Validators** (×3) poke holes in it: one argues for, one against, one stays neutral.
+4. **Risk manager** (×1) **can veto any trade**.
+5. **Auditors** (×2) review every trade afterward (a trade log with "reviewed" ticks).
+
+**The smart part:** **the AI never places the order. It only pitches.** Plain code ("fixed rules") does the math, sets the size and caps risk per trade, so a bad AI answer like "go all in!" can't wreck the account. It starts on **paper trading** ("test with fake money → watch the results → then decide"). The caption hashtags mention **Bybit**.
+
+**Repo:** not named in the reel. The link is gated behind commenting "FUND". Web searches found no exact match, but these are close relatives worth comparing:
+- [TradingAgents](https://github.com/TauricResearch/TradingAgents) and its crypto fork [TradingAgents-crypto](https://github.com/auronsun/TradingAgents-crypto): analysts, a bull/bear debate and risk debaters.
+- [cubexch/ai-fund](https://github.com/cubexch/ai-fund): Claude Code, dozens of persona agents, paper trading by default.
+- [MLgeek96/Multi-Agentic-AI-Quantitative-Trading](https://github.com/MLgeek96/Multi-Agentic-AI-Quantitative-Trading): independent risk veto plus audited agents.
+- [Jev-Trades](https://github.com/zadescoxp/Jev-Trades): code handles sizing, take-profit and stop-loss; paper trading by default with optional Bybit testnet.
+
+**Why it matters for our plan:** this is the right architecture. The LLM pitches and argues, deterministic code sizes and executes, a risk agent can veto, and auditors review afterward. It matches section 4's guardrails. Add "identify this repo and compare it with TradingAgents / ai-fund" to the research prompt's tool list (section 5.3).
