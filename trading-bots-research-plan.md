@@ -357,3 +357,30 @@ Add this paper to the deep-research prompt (section 5, question 5) and have Clau
 - It's interesting as a research or discretionary assistant, not a robust bot.
 - Its opposite is the 11-agent reel (§7): code, not AI, places orders.
 - It shows **GEX** and **footprint/CVD** as data sources worth evaluating.
+
+### 8.5 "Climax Volume Reversal": a complete, testable strategy (@hooper.algo.fxx, DejlH_JyUUg)
+
+**Who:**
+- Jacob Hooper ("I built thousands of trading strategies so you don't have to").
+- He shows a live **Darwinex** account, "JacobHooperNGA", with **+417.56% since inception**, VaR about 7.95%, and a "DarwinIA GOLD" badge. He claims +420% in 6 months and the top 1% of Darwinex DarwinIA rankings.
+- Darwinex is a regulated broker/asset manager that publishes audited track records, so this is one of the *more* verifiable claims in this whole set. Still, check the DARWIN page yourself.
+
+**The system** (System No. 145, a short-horizon mean reversion; signals on 15-minute candles, executed with 1-hour context; read from screen):
+1. **Identify the climax:** on M15, a candle whose **volume exceeds 3× the 20-period volume average** at the end of a run. Mark its high and low.
+2. **Wait for confirmation:** trade only if the **next M15 candle closes in the opposite direction**. No close, no trade.
+3. **Stop at the extreme:** the climax candle's high for shorts, its low for longs. This is non-negotiable.
+4. **Fixed take profit at 1.5R:** no trailing, no scaling. "Changing it live is curve-fitting in disguise."
+5. **Two-hour clock:** if neither stop nor target is hit within 2 hours, close at market.
+- **Plus:** a **spread filter**, which also avoids news spikes. It never holds overnight, "which is great for prop firms like FTMO."
+
+**Stated backtest:** +123% over 11 years, **max drawdown 11%**, only one negative year (-3.35%), best year +35.68%. A year-by-year, month-by-month table is shown.
+
+**Why it's useful to us:**
+- Unlike most reels, it gives a **fully specified rule set** that Claude Code can implement and push straight through our validation harness (out-of-sample testing, ± parameter neighbours, costs, scrambled market, Monte Carlo against prop rules).
+- It's intraday, flat by close and has fixed R, so it **fits prop-firm rules** well.
+- It's the best "first strategy to test" candidate from all the reels.
+
+**Caveats:**
+- The 11-year backtest comes from the seller of a "6-step system" Discord/PDF.
+- The +417% live figure is a separate portfolio of systems, not this one strategy.
+- The 3× volume threshold, 1.5R target and 2-hour clock are exactly the kind of parameters to test for neighbourhood stability.
