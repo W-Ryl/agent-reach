@@ -130,7 +130,6 @@ def main(sp_path, vix_path):
         rel = df[["Open", "High", "Low", "Close"]].div(df.PrevClose, axis=0).values[idx]
         vix = df.PrevVIX.values[idx]
         closes = [df.PrevClose.iloc[0]]
-        o = h = l = c = []
         O, H, L, C = [], [], [], []
         for r in rel:
             pc = closes[-1]
