@@ -110,3 +110,28 @@ Never use a bar's high/low to decide an exit that could have happened before the
 
 ## Files
 - `backtest_iv_walls.py`: the daily test. Run it with `python backtest_iv_walls.py sp500.csv vix.csv`, using the two CSVs listed in section 3.
+
+## 6. Added Oct 27: the "4 repos that run the research side of a hedge fund" reel (@mirkovicdev, De1lzKANMgn)
+The four repos:
+- **PySR**: symbolic regression, which finds a readable formula behind data. By Miles Cranmer, an astrophysicist.
+- **tick**: Hawkes processes, which model how one order or event triggers the next.
+- **arch**: GARCH volatility models plus data-snooping tests (SPA, StepM, Model Confidence Set). By Kevin Sheppard at Oxford.
+- **MAPIE**: conformal prediction intervals, a guaranteed-coverage range around any model's prediction.
+
+`quant_tools_demo.py` tries **arch** and the **MAPIE method** on our S&P/VIX data (z = 1.28 walls):
+
+| Test | Result |
+|---|---|
+| Walls from **VIX** | upper holds 92.9%, lower 89.7%, avg half-width 1.59% |
+| Walls from a **GARCH(1,1) forecast** (refit yearly, no look-ahead) | 87.1% / 84.1%, 1.38% (narrower, but under target) |
+| **50/50 blend** ("historical vol + contract pricing") | 90.5% / 87.7%, 1.48%. Closest to a true 90% with narrower walls. |
+| **SPA test** on all 12 fade variants vs doing nothing | p ≈ 0.49: no evidence any variant beats zero (confirms section 3 formally) |
+| **Conformal** upper wall (gradient-boosted model plus split-conformal, the method MAPIE packages) | holds **91.6%** at 1.29% vs the VIX wall's 93.9% at 1.36%. Tighter walls with on-target coverage. |
+
+**Fit with our bot:**
+- **arch: use it now.**
+	- GARCH or blended volatility for the walls.
+	- `arch.bootstrap.SPA` / `StepM` / `MCS` as the **data-snooping gate** in the strategy factory: "did the best of N strategies beat the benchmark, or get lucky?"
+- **MAPIE: use it now.** It gives calibrated 90% walls with guaranteed coverage. Adaptive conformal (ACI) keeps coverage on target when volatility regimes shift. Interval width can drive position size: a wide band means trade smaller or skip.
+- **tick: later.** It needs tick or 1-minute data. Hawkes intensity is a principled "volume-climax / order-burst" detector, so it pairs with the Climax Volume Reversal rules. Check that the package still installs on current Python.
+- **PySR: optional, for the research agent.** It turns a black-box signal into a short formula you can sanity-check. Overfitting risk is high, so only accept formulas that pass the SPA gate. It needs Julia.
