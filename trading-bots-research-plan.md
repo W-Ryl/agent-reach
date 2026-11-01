@@ -384,3 +384,15 @@ Add this paper to the deep-research prompt (section 5, question 5) and have Clau
 - The 11-year backtest comes from the seller of a "6-step system" Discord/PDF.
 - The +417% live figure is a separate portfolio of systems, not this one strategy.
 - The 3× volume threshold, 1.5R target and 2-hour clock are exactly the kind of parameters to test for neighbourhood stability.
+
+---
+
+## 9. Added Nov 1: "5 things to build with Claude this weekend" (@msbintel, DfJ8oiZI3YQ)
+
+| # | Build | Tool on screen | Verdict for our bot |
+|---|---|---|---|
+| 1 | Claude ↔ TradingView: draws charts, scans watchlists, runs backtests | **tradesdontlie/tradingview-mcp** (about 7K stars). It controls *TradingView Desktop* through Chrome DevTools, needs a paid TradingView plan, and can't place orders. | **Yes, as the eyes and hands on charts.** Claude can draw our IV walls or climax setups and read Pine Script results. Keep execution in code. |
+| 2 | "CEO agent" (**Friday**) running 9 sub-agents | Claude Code **custom subagents** (the docs page is shown) | **Yes.** This is our agent "trading firm" built natively in Claude Code: Friday = desk lead, with subagents for scout, analysts, bull/bear, risk, auditor and so on. |
+| 3 | Daily market brief to Discord/WhatsApp | **NousResearch/hermes-agent** (216K stars), the same Hermes as JARVIS | **Yes, easy win.** Brief = overnight moves, calendar (FOMC/CPI), IV-wall levels for the day, and whether the risk agent says "normal" or "cautious" (half size). |
+| 4 | Backtest any strategy against real history | **backtesting.py** (shown on screen) | **Yes**, behind our validation gates (out-of-sample, neighbourhood, costs, scrambled market, the SPA test from `arch`). Plain backtests alone are how people fool themselves. |
+| 5 | Forecast prices with **Google TimesFM 3**, pushed into TradingView | **google-research/timesfm** (about 29K stars). TimesFM-3 came out Aug 31, 2026 (330M parameters, zero-shot, multivariate). **The public weights are non-commercial.** | **Research only.** Treat it like Kronos: one more signal that must pass the SPA gate. The licence means TimesFM-2.5 is the safer checkpoint for anything production-like. Use its forecast spread as volatility/range context rather than for direction. |
