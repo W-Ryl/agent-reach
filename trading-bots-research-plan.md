@@ -396,3 +396,29 @@ Add this paper to the deep-research prompt (section 5, question 5) and have Clau
 | 3 | Daily market brief to Discord/WhatsApp | **NousResearch/hermes-agent** (216K stars), the same Hermes as JARVIS | **Yes, easy win.** Brief = overnight moves, calendar (FOMC/CPI), IV-wall levels for the day, and whether the risk agent says "normal" or "cautious" (half size). |
 | 4 | Backtest any strategy against real history | **backtesting.py** (shown on screen) | **Yes**, behind our validation gates (out-of-sample, neighbourhood, costs, scrambled market, the SPA test from `arch`). Plain backtests alone are how people fool themselves. |
 | 5 | Forecast prices with **Google TimesFM 3**, pushed into TradingView | **google-research/timesfm** (about 29K stars). TimesFM-3 came out Aug 31, 2026 (330M parameters, zero-shot, multivariate). **The public weights are non-commercial.** | **Research only.** Treat it like Kronos: one more signal that must pass the SPA gate. The licence means TimesFM-2.5 is the safer checkpoint for anything production-like. Use its forecast spread as volatility/range context rather than for direction. |
+
+---
+
+## 10. Added Nov 5: "POV: your AI agents have a better office than you" (DfJiHrmipzE)
+The reel has no caption or voice (music only), and the creator wasn't shown in the embed.
+
+**What's on screen:** a browser app titled **"AI Agent Virtual Office"** running locally (`127.0.0.1:5173`, a Vite/Three.js-style web app).
+
+- **Overview mode:** a 3D low-poly office from above, with rooms tabbed Workspace, Meeting room, Manager office, Lounge, Kitchen. Side panels show:
+  - stat cards: active agents 0/5, running tasks, completed tasks, project progress %
+  - **"New task for the team"** box (e.g. "Create a modern e-commerce website")
+  - **Agent activity:** Olivia (Manager), Leo (Research), Max (Developer), Mia (Designer), Sam (QA), each idle or busy
+  - live **Agent communication** feed ("Grabbing a coffee", "Two minutes at the coffee bar")
+  - task timeline
+- **Walk-in mode:** first- or third-person WASD walking. Press **E to talk to Olivia (Manager Agent)**, which opens a chat panel at her desk. Agents walk to the kitchen, play pool and sit at desks.
+
+**Repo:** not shown. Similar open-source projects:
+- [Hermes Virtual Office](https://github.com/JuniorXcoder/hermes-virtual-office/wiki): a 3D office for a Hermes agent fleet, with meetings, auto-minutes and a Kanban synced to Hermes, built on Next.js and Three.js. It fits JARVIS, which already runs on Hermes.
+- [ai-office](https://meshkore-web.pages.dev/agent/gaurav2693-ai-office) (9 agents, React + Three.js).
+- [agents-home](https://github.com/Litas-dev/agents-home) (Three.js WebGPU, Kanban, agent inspector).
+- [MyClaw3D](https://openclawdir.com/plugins/myclaw3d-nnqcme) (MIT).
+
+**Use for us:**
+- **Trading firm "skin":** map the rooms to our desk. Manager = Friday/desk lead, analysts at workstations, the Skeptic and Risk agent in a "risk room", the auditor in the back office. Walking up to the risk manager and asking "why did you veto that?" is a great way to inspect the veto log. It's the same idea as the Kalshi Krypt Trader 3D office.
+- **Island Series:** this is basically the island's engine indoors. Characters with roles, idle behaviour (coffee, pool), a manager you can talk to, and a communications feed that doubles as story material for the Storyteller.
+- **Keep it optional:** like the 3PO brain orb, it's presentation. The trading logic and risk rules stay in code.
